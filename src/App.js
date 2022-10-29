@@ -1,14 +1,9 @@
 import Papa from 'papaparse';
-import './App.css';
 
-function App() {
-  const csvData = '2,3,4,5,3,4'
-  console.log(Papa.parse(csvData))
+export function App() {
   return (
    <>
-    <h1>hi {Papa.parse(csvData)}</h1>
+    <h1>home</h1>
    </>
   );
 }
-
-export default App;
