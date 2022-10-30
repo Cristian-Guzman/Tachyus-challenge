@@ -1,34 +1,20 @@
-import React, { useEffect, useState } from "react";
-import Papa from "papaparse";
+import React from "react";
 import completions from "Data/completions.csv";
 import { Grid, GridColumn } from "@progress/kendo-react-grid";
 import '@progress/kendo-theme-default/dist/all.css';
+import { UseGetData } from "Hooks/getData.js";
 
 
 export const Home = () => {
-  const [file, setFile] = useState([]);
-
-  useEffect(() => {
-    const file = completions;
-    Papa.parse(file, {
-      download: true,
-      header: true,
-      complete: function (result) {
-        setFile(result.data);
-      },
-    });
-  }, []);
-  useEffect(() => {
-    console.log(file)
-  }, [file])
-
+  
+  const dataFile = UseGetData(completions)
   return (
     <>
         <Grid
       style={{
         height: "100%"
       }}
-      data={file}
+      data={dataFile}
     >
       <GridColumn field="TD" title="TD" />
       <GridColumn field="Type" title="Type" />
