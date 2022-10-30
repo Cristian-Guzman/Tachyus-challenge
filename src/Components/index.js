@@ -15,10 +15,6 @@ const initialDataState = {
 export const Home = () => {
   const [pageOne, setPageOne] = useState(initialDataState);
   const [pageTwo, setPageTwo] = useState(initialDataState);
-  const [oil, setOil] = useState([])
-  const [water, setWater] = useState([])
-  const [gas, setGas] = useState([])
-  const [waterInj, setWaterInj] = useState([])
   let dataGraphOil = []
   let dataGraphWater = []
   let dataGraphGas = []
@@ -44,15 +40,10 @@ export const Home = () => {
 
   const dataFileProduction = UseGetData(production)
   const dataFileCompletions = UseGetData(completions)
-  if (dataFileProduction.length > 0)
-  addStates()
-  {/* 
-    setOil(dataFileProduction.map(water => water.Qo))
-    setWater(dataFileProduction.map(water => water.Qw))
-    setGas(dataFileProduction.map(water => water.Qg))
-    setWaterInj(dataFileProduction.map(water => water.Qs)) */
-
+  if (dataFileProduction.length > 0){
+    addStates()
   }
+
   
   return (
     <>
