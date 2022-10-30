@@ -1,12 +1,15 @@
 {
     "compilerOptions": {
-      "baseUrl": ".",
+      "baseUrl": "src",
       "paths": {
             "Components/*":[
                 "Components/*"
             ],
             "Hooks/*":[
                 "Hooks/*"
+            ],
+            "Data/*":[
+                "Data/*"
             ]
         }
     }

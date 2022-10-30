@@ -7477,6 +7477,11 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
+react-kendo@^0.13.11:
+  version "0.13.11"
+  resolved "https://registry.yarnpkg.com/react-kendo/-/react-kendo-0.13.11.tgz#dba5a5fc6d11158acfc6c41351f9192f3afac118"
+  integrity sha512-ZKjlLNVvdJrEk+nrewNivPQnDecM/sQFLkWyCgyaUhJvFjtJUcLg/qmG/U9FGWnx3rBFQfAkDO2kSRCHua64nw==
+
 react-refresh@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.11.0.tgz#77198b944733f0f1f1a90e791de4541f9f074046"

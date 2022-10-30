@@ -1,4 +1,3 @@
-import Papa from 'papaparse';
 import { Home } from 'Components';
 
 export function App() {
