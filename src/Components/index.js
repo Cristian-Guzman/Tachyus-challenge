@@ -1,37 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import completions from "Data/completions.csv";
+import production from "Data/production.csv";
+import { uid } from 'uid';
 import { Grid, GridColumn } from "@progress/kendo-react-grid";
 import '@progress/kendo-theme-default/dist/all.css';
 import { UseGetData } from "Hooks/getData.js";
 
+const initialDataState = {
+  skip: 0,
+  take: 20,
+};
 
 export const Home = () => {
+  const [pageOne, setPageOne] = useState(initialDataState);
+  const [pageTwo, setPageTwo] = useState(initialDataState);
+  const pageChangeOne = (event) => {
+    setPageOne(event.page);
+  };
+  const pageChangeTwo = (event) => {
+    setPageTwo(event.page);
+  };
   
-  const dataFile = UseGetData(completions)
+  const dataFileProduction = UseGetData(production)
+  const dataFileCompletions = UseGetData(completions)
+  
   return (
     <>
+    {dataFileProduction.length > 0 && dataFileProduction &&
         <Grid
-      style={{
-        height: "100%"
-      }}
-      data={dataFile}
-    >
-      <GridColumn field="TD" title="TD" />
-      <GridColumn field="Type" title="Type" />
-      <GridColumn field="X" title="X"/>
-      <GridColumn field="Y" title="Y"/>
-      <GridColumn field="boreId" title="boreId" />
-      <GridColumn field="compSubId" title="compSubId" />
-      <GridColumn field="compartment" title="compartment"/>
-      <GridColumn field="faultBlock" title="faultBlock"/>
-      <GridColumn field="isHorizontal" title="isHorizontal"/>
-      <GridColumn field="lat" title="lat"/>
-      <GridColumn field="long" title="long"/>
-      <GridColumn field="maxBHP" title="maxBHP"/>
-      <GridColumn field="reservoir" title="reservoir"/>
-      <GridColumn field="wellAPI" title="wellAPI"/>
-      <GridColumn field="wellName" title="wellName"/>
+        style={{
+          height: "100%"
+        }}
+        data={dataFileProduction.slice(pageOne.skip, pageOne.take + pageOne.skip)}
+        skip={pageOne.skip}
+        take={pageOne.take}
+        total={dataFileProduction.length}
+        pageable={true}
+        onPageChange={pageChangeOne}
+        >
+      {Object.keys(dataFileProduction[0]).map(e => (
+        <GridColumn key={uid()} field={e} title={e}/>
+        ))}
     </Grid>
+      }
+    {dataFileCompletions.length > 0 && dataFileCompletions &&
+        <Grid
+        style={{
+          height: "100%"
+        }}
+        data={dataFileCompletions.slice(pageTwo.skip, pageTwo.take + pageTwo.skip)}
+        skip={pageTwo.skip}
+        take={pageTwo.take}
+        total={dataFileCompletions.length}
+        pageable={true}
+        onPageChange={pageChangeTwo}
+        >
+      {Object.keys(dataFileCompletions[0]).map(e => (
+        <GridColumn key={uid()} field={e} title={e}/>
+        ))}
+    </Grid>
+      }
     </>
   );
 };

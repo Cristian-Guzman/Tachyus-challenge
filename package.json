@@ -29,6 +29,7 @@
     "react-kendo": "^0.13.11",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.6",
+    "uid": "^2.0.1",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
