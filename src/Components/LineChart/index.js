@@ -12,7 +12,7 @@ export const LineChart = ({year, oil, water, gas, waterInj}) => {
             categories: year,
           },
         title: {
-          text: "My chart"
+          text: "Production Csv"
         },
         series: [
           {
