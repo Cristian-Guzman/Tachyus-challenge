@@ -5,6 +5,7 @@ import { Grid } from "@progress/kendo-react-grid";
 import "@progress/kendo-theme-default/dist/all.css";
 import { UseGetData } from "Hooks/getData.js";
 import { LineChart } from "./LineChart";
+import { Search } from "./Search";
 
 const initialDataState = {
   skip: 0,
@@ -69,7 +70,7 @@ export const Home = () => {
           onPageChange={pageChangeOne}
         ></Grid>
       )}
-      <input type="text" onChange={handleSearchData} value={search} />
+      <Search handleSearchData={handleSearchData} search={search} />
       {dataFileCompletions.length > 0 && dataFileCompletions && (
         <Grid
           style={{
