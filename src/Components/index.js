@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import completions from "Data/completions.csv";
 import production from "Data/production.csv";
 import "@progress/kendo-theme-default/dist/all.css";
