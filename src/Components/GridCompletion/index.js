@@ -1,5 +1,4 @@
 import { Grid } from "@progress/kendo-react-grid";
-import { LineChart } from "Components/LineChart";
 import { Search } from "Components/Search";
 import React, { useState } from "react";
 

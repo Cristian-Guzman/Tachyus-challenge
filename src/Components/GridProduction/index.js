@@ -19,18 +19,15 @@ export const GridProduction = ({ dataFileProduction }) => {
     setPageOne(event.page);
   };
 
-  const addStates = () => {
+  if (dataFileProduction.length > 0) {
     dataFileProduction.map((data) => {
       dataGraphOil.push(Number(data.Qo));
       dataGraphWater.push(Number(data.Qw));
       dataGraphGas.push(Number(data.Qg));
       dataGraphWaterInj.push(Number(data.Qs));
       dataGraphYear.push(Number(data.Year));
+      return data
     });
-  };
-
-  if (dataFileProduction.length > 0) {
-    addStates();
   }
 
   return (
