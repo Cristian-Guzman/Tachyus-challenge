@@ -1,6 +1,7 @@
 import { Grid } from "@progress/kendo-react-grid";
 import { LineChart } from "Components/LineChart";
 import React, { useState } from "react";
+import { TitleSC } from "./styles";
 
 const initialDataState = {
   skip: 0,
@@ -32,6 +33,7 @@ export const GridProduction = ({ dataFileProduction }) => {
 
   return (
     <>
+      <TitleSC>Completions Grid</TitleSC>
       {dataFileProduction.length > 0 && dataFileProduction && (
         <Grid
           style={{
