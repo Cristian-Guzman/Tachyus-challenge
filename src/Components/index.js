@@ -1,29 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import completions from "Data/completions.csv";
 import production from "Data/production.csv";
-import { uid } from 'uid';
-import { Grid, GridColumn } from "@progress/kendo-react-grid";
-import '@progress/kendo-theme-default/dist/all.css';
+import { Grid } from "@progress/kendo-react-grid";
+import "@progress/kendo-theme-default/dist/all.css";
 import { UseGetData } from "Hooks/getData.js";
 import { LineChart } from "./LineChart";
-
+import { Search } from "./Search";
 
 const initialDataState = {
   skip: 0,
   take: 20,
 };
 export const Home = () => {
+  const dataFileProduction = UseGetData(production);
+  const dataFileCompletions = UseGetData(completions);
   const [pageOne, setPageOne] = useState(initialDataState);
   const [pageTwo, setPageTwo] = useState(initialDataState);
-  const [oil, setOil] = useState([])
-  const [water, setWater] = useState([])
-  const [gas, setGas] = useState([])
-  const [waterInj, setWaterInj] = useState([])
-  let dataGraphOil = []
-  let dataGraphWater = []
-  let dataGraphGas = []
-  let dataGraphWaterInj = []
-  let dataGraphYear = []
+  const [search, setSearch] = useState("");
+  const dataGraphOil = [];
+  const dataGraphWater = [];
+  const dataGraphGas = [];
+  const dataGraphWaterInj = [];
+  const dataGraphYear = [];
 
   const pageChangeOne = (event) => {
     setPageOne(event.page);
@@ -31,69 +29,77 @@ export const Home = () => {
   const pageChangeTwo = (event) => {
     setPageTwo(event.page);
   };
-  
+
+  const handleSearchData = (e) => {
+    setSearch(e.target.value);
+  };
+  const results = !search
+    ? dataFileCompletions
+    : dataFileCompletions.filter((dato) =>
+        dato.wellName.toLowerCase().includes(search.toLocaleLowerCase())
+      );
   const addStates = () => {
-    dataFileProduction.map(data => {
-      dataGraphOil.push(Number(data.Qo))
-      dataGraphWater.push(Number(data.Qw))
-      dataGraphGas.push(Number(data.Qg))
-      dataGraphWaterInj.push(Number(data.Qs))
-      dataGraphYear.push(Number(data.Year))
-      })
-  } 
+    dataFileProduction.map((data) => {
+      dataGraphOil.push(Number(data.Qo));
+      dataGraphWater.push(Number(data.Qw));
+      dataGraphGas.push(Number(data.Qg));
+      dataGraphWaterInj.push(Number(data.Qs));
+      dataGraphYear.push(Number(data.Year));
+    });
+  };
 
-  const dataFileProduction = UseGetData(production)
-  const dataFileCompletions = UseGetData(completions)
-  if (dataFileProduction.length > 0)
-  addStates()
-  {/* 
-    setOil(dataFileProduction.map(water => water.Qo))
-    setWater(dataFileProduction.map(water => water.Qw))
-    setGas(dataFileProduction.map(water => water.Qg))
-    setWaterInj(dataFileProduction.map(water => water.Qs)) */
-
+  if (dataFileProduction.length > 0) {
+    addStates();
   }
-  
+
   return (
     <>
-    {dataFileProduction.length > 0 && dataFileProduction &&
+      {dataFileProduction.length > 0 && dataFileProduction && (
         <Grid
-        style={{
-          height: "100%"
-        }}
-        data={dataFileProduction.slice(pageOne.skip, pageOne.take + pageOne.skip)}
-        skip={pageOne.skip}
-        take={pageOne.take}
-        total={dataFileProduction.length}
-        pageable={true}
-        onPageChange={pageChangeOne}
-        >
-      {Object.keys(dataFileProduction[0]).map(e => (
-        <GridColumn key={uid()} field={e} title={e}/>
-        ))}
-    </Grid>
-      }
-    {dataFileCompletions.length > 0 && dataFileCompletions &&
+          style={{
+            height: "100%",
+          }}
+          data={dataFileProduction.slice(
+            pageOne.skip,
+            pageOne.take + pageOne.skip
+          )}
+          skip={pageOne.skip}
+          take={pageOne.take}
+          total={dataFileProduction.length}
+          pageable={true}
+          onPageChange={pageChangeOne}
+        ></Grid>
+      )}
+      <Search handleSearchData={handleSearchData} search={search} />
+      {dataFileCompletions.length > 0 && dataFileCompletions && (
         <Grid
-        style={{
-          height: "100%"
-        }}
-        data={dataFileCompletions.slice(pageTwo.skip, pageTwo.take + pageTwo.skip)}
-        skip={pageTwo.skip}
-        take={pageTwo.take}
-        total={dataFileCompletions.length}
-        pageable={true}
-        onPageChange={pageChangeTwo}
-        >
-      {Object.keys(dataFileCompletions[0]).map(e => (
-        <GridColumn key={uid()} field={e} title={e}/>
-        ))}
-    </Grid>
-      }
-      {
-        dataGraphOil.length > 0 &&
-        <LineChart year={dataGraphYear} gas={dataGraphGas} oil={dataGraphOil} water={dataGraphWater} waterInj={dataGraphWaterInj}/>
-      }
+          style={{
+            height: "100%",
+          }}
+          data={
+            results.length > 0
+              ? results.slice(pageTwo.skip, pageTwo.take + pageTwo.skip)
+              : dataFileCompletions.slice(
+                  pageTwo.skip,
+                  pageTwo.take + pageTwo.skip
+                )
+          }
+          skip={pageTwo.skip}
+          take={pageTwo.take}
+          total={results.length > 0 ? results.length : dataFileCompletions.length}
+          pageable={true}
+          onPageChange={pageChangeTwo}
+        ></Grid>
+      )}
+      {dataGraphOil.length > 0 && (
+        <LineChart
+          year={dataGraphYear}
+          gas={dataGraphGas}
+          oil={dataGraphOil}
+          water={dataGraphWater}
+          waterInj={dataGraphWaterInj}
+        />
+      )}
     </>
   );
 };
