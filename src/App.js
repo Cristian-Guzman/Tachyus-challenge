@@ -1,9 +1,9 @@
-import Papa from 'papaparse';
+import { Home } from 'Components';
 
 export function App() {
   return (
    <>
-    <h1>home</h1>
+   <Home />
    </>
   );
 }
