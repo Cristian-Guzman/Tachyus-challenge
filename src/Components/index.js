@@ -10,12 +10,16 @@ import { GridProduction } from "./GridProduction";
 export const Home = () => {
   const dataFileProduction = UseGetData(production);
   const dataFileCompletions = UseGetData(completions);
+  const { type } = useParams();
 
   return (
     <>
-      <GridProduction dataFileProduction={dataFileProduction} />
-
-      <GridCompletion dataFileCompletions={dataFileCompletions} />
+      {type === 'completions' && (
+        <GridCompletion dataFileCompletions={dataFileCompletions} />
+      )}
+      { type === 'production' && (
+        <GridProduction dataFileProduction={dataFileProduction} />
+      )}
     </>
   );
 };
